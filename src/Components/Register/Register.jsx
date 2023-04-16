@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Button, Checkbox, Label, TextInput } from "flowbite-react";
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 import app from "../../firebase/firebase.confiq";
+import { Link } from "react-router-dom";
 
 const Register = () => {
   const [error, setError] = useState("");
@@ -24,8 +25,8 @@ const Register = () => {
       setError("Please add at least one special charecter");
       return;
     }
-    console.log('fdgtrtrthrt');
-     if (!/(?=.*[0-9].*[0-9])/.test(password)) {
+ 
+else if (!/(?=.*[0-9].*[0-9])/.test(password)) {
       setError("Please add at least two number");
       return;
     } else if (!/(?=.*[a-z].*[a-z])/.test(password)) {
@@ -73,7 +74,7 @@ const Register = () => {
           <TextInput
             name="password"
             id="password1"
-            type="text"
+            type="password"
             required={true}
           />
         </div>
@@ -81,14 +82,19 @@ const Register = () => {
           <Checkbox id="remember" />
           <Label htmlFor="remember">Allow all terms and condition</Label>
         </div>
-        <Button className="w-28" type="submit">
+      <div>
+      <Button className="w-28" type="submit">
           Submit
         </Button>
+        <p><small>Already have an account?Please <Link className="underline font-bold text-blue-700" to="/login">Login</Link></small></p>
+      </div>
         {error ? (
           <p className="text-1xl font-bold text-red-700">{error}</p>
         ) : (
           <p className="text-1xl font-bold text-green-700">{success}</p>
         )}
+        {/* <p className="text-1xl font-bold text-red-700">{error}</p>
+        <p className="text-1xl font-bold text-green-700">{success}</p> */}
       </form>
     </div>
   );
