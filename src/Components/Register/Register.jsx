@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Checkbox, Label, TextInput } from "flowbite-react";
-import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, sendEmailVerification } from "firebase/auth";
 import app from "../../firebase/firebase.confiq";
 import { Link } from "react-router-dom";
 
@@ -44,14 +44,29 @@ else if (!/(?=.*[0-9].*[0-9])/.test(password)) {
         setError("");
         event.target.reset();
         setSuccess("Account has been created succesfully");
+        sendVerificationEmail(result.user)
+        
         // setUser(loggedUser)
       })
       .catch((error) => {
         console.error(error.message);
         setError(error.message);
       });
+
     console.log(email, password);
   };
+
+
+  const sendVerificationEmail=user=>{
+    sendEmailVerification(user)
+    .then(result=>{
+      console.log(result);
+      alert('Please Verify your email')
+    })
+    .catch(error=>{
+      setError(error.message)
+    })
+  }
   return (
     <div>
       <h1>Register Now</h1>
